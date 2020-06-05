@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+  xmlns:tns="http://com.example/Case/Get/Starters" 
+  xmlns:ns1="http://com.example/Case/Get" 
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://com.example/Case/Get/Starters">
+  <wsdl:types>
+    <xs:schema xmlns="http://com.example/Case/Get" 
+      xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://com.example/Case/Get" id="InsuranceDomain" version="0.3" elementFormDefault="qualified" attributeFormDefault="unqualified">
+      <xs:element name="GetCase_Request">
+        <xs:complexType>
+          <xs:all>
+            <xs:element name="SF" minOccurs="0">
+              <xs:complexType>
+                <xs:all>
+                  <xs:element name="CS">
+                    <xs:complexType>
+                      <xs:all>
+                        <xs:element name="CSID" minOccurs="0">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:maxLength value="1"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:element>
+                      </xs:all>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:all>
+              </xs:complexType>
+            </xs:element>
+          </xs:all>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCase_Response">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="AL" minOccurs="0">
+              <xs:complexType>
+                <xs:all>
+                  <xs:element name="KANAAL" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="1"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:all>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:service name="GetCase__1">
+    <wsdl:port name="Request" binding="tns:RequestBinding">
+      <soap:address location=""/>
+      <jms:connectionFactory>factory</jms:connectionFactory>
+      <jms:targetAddress destination="queue">queue</jms:targetAddress>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:portType name="GetCase_Interface_1">
+    <wsdl:operation name="GetCase_1">
+      <wsdl:input message="tns:GetCase_1_Request"/>
+      <wsdl:output message="tns:GetCase_1_Response"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RequestBinding" type="tns:GetCase_Interface_1">
+    <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+    <jms:binding messageFormat="Text"/>
+    <wsdl:operation name="GetCase_1">
+      <soap:operation style="document" soapAction="GetCase_1"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="Body"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:message name="GetCase_1_Request">
+    <wsdl:part name="Body" element="ns1:GetCase_Request"/>
+  </wsdl:message>
+  <wsdl:message name="GetCase_1_Response">
+    <wsdl:part name="Body" element="ns1:GetCase_Response"/>
+  </wsdl:message>
+</wsdl:definitions>
